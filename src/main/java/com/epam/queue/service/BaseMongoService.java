@@ -16,6 +16,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -156,5 +157,9 @@ public abstract class BaseMongoService {
     public void updateOneFieldById(String id, String fieldName, Object value) {
         logger.info("change collection {} updateOne id {} fieldName {} value {} (BaseMongoService.updateOneFieldById)", mongoCollection.getNamespace().getCollectionName(), id, fieldName, value);
         mongoCollection.updateOne(eq("_id", new ObjectId(id)), new Document("$set", new Document(fieldName, value)));
+    }
+
+    public Date getCreationDate(Document document) {
+        return document.getObjectId("_id").getDate();
     }
 }

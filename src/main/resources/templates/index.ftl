@@ -1,22 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Queue</title>
-
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-</head>
-<body>
-<h1>Hello, world!</h1>
-
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-</body>
-</html>
+<#include "components/header.ftl">
+<form class="form-inline" action="/task" method="post">
+    <div class="form-group">
+        <label for="taskId">Request id</label>
+        <input type="text" class="form-control" id="taskId" name="taskId" placeholder="Request id">
+    </div>
+    <button type="submit" class="btn btn-default">Add to queue</button>
+</form>
+<table class="table">
+    <thead>
+    <tr>
+        <th>created</th>
+        <th>username</th>
+        <th>link</th>
+        <#if user??>
+        <th>actions</th>
+        </#if>
+    </tr>
+    </thead>
+    <tbody>
+    <#list tasks as task>
+    <tr>
+        <td>${task.creationDate?datetime}</td>
+        <td>${task.username}</td>
+        <td><a href="${task.requestUrl}">${task.id}</a></td>
+        <td>
+            <#if user?? && user == task.username>
+            <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    Actions <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+                    <li><a href="/task/done?id=${task._id}">Done</a></li>
+                    <li><a href="/task/cancel?id=${task._id}">Cancel</a></li>
+                </ul>
+            </div>
+            </#if>
+        </td>
+    </tr>
+    </#list>
+    </tbody>
+</table>
+<#include "components/footer.ftl">

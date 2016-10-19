@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -21,16 +22,11 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/register", method = POST)
-    public String register(@RequestBody Document doc) {
+    public String register(@RequestParam String email, @RequestParam String password) {
         Document user = new Document();
-        userService.setUsername(user, doc.getString("username"));
-        userService.setPassword(user, doc.getString("password"));
+        userService.setUsername(user, email);
+        userService.setPassword(user, password);
         userService.insertOne(user);
-        return "login";
-    }
-
-    @RequestMapping("/login")
-    public String login() {
-        return "registration";
+        return "redirect:/login";
     }
 }
