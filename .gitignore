@@ -1,3 +1,5 @@
 .gitignore
 .gradle/
 .idea/
+/out/
+/build/
