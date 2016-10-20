@@ -17,12 +17,20 @@ public class TaskService extends BaseMongoService {
         super(mongoDatabase, collectionName);
     }
 
-    public String getId(Document task) {
-        return task.getString("id");
+    public String getUrl(Document task) {
+        return task.getString("url");
     }
 
-    public void setId(Document task, String id) {
-        task.put("id", id);
+    public void setUrl(Document task, String url) {
+        task.put("url", url);
+    }
+
+    public String getName(Document task) {
+        return task.getString("name");
+    }
+
+    public void setName(Document task, String name) {
+        task.put("name", name);
     }
 
     public String getUsername(Document task) {

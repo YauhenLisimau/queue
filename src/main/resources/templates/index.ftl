@@ -15,7 +15,7 @@
     <tr>
         <td>${task.creationDate?datetime}</td>
         <td>${task.username}</td>
-        <td><a href="${task.requestUrl}">${task.id}</a></td>
+        <td><a href="${task.url}">${task.name}</a></td>
         <td>
             <#if user?? && user == task.username>
             <div class="dropdown">
@@ -36,8 +36,12 @@
 <#if user??>
 <form class="form-inline" action="/task" method="post">
     <div class="form-group">
-        <label for="taskId">Request id</label>
-        <input type="text" class="form-control" id="taskId" name="taskId" placeholder="Request id">
+        <label for="url">Url</label>
+        <input type="text" class="form-control" id="url" name="url" placeholder="Url">
+    </div>
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" name="name" placeholder="Name">
     </div>
     <button type="submit" class="btn btn-default">Add to queue</button>
 </form>
