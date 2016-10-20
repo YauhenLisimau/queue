@@ -43,7 +43,7 @@
         <label for="name">Name</label>
         <input type="text" class="form-control" id="name" name="name" placeholder="Name">
     </div>
-    <button type="submit" class="btn btn-default">Add to queue</button>
+    <button type="submit" class="btn btn-default">Add</button>
 </form>
 </#if>
 <#include "components/footer.ftl">
