@@ -1,6 +1,10 @@
         </div>
         <div class="col-md-2"></div>
     </div>
+        <hr>
+        <footer>
+            <p>&copy; Created by <a href="mailto:yauhen.lisimau@epam.com">Yauhen Lisimau</a></p>
+        </footer>
 </div>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

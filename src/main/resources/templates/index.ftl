@@ -1,13 +1,4 @@
 <#include "components/header.ftl">
-<#if user??>
-<form class="form-inline" action="/task" method="post">
-    <div class="form-group">
-        <label for="taskId">Request id</label>
-        <input type="text" class="form-control" id="taskId" name="taskId" placeholder="Request id">
-    </div>
-    <button type="submit" class="btn btn-default">Add to queue</button>
-</form>
-</#if>
 <table class="table">
     <thead>
     <tr>
@@ -42,4 +33,13 @@
     </#list>
     </tbody>
 </table>
+<#if user??>
+<form class="form-inline" action="/task" method="post">
+    <div class="form-group">
+        <label for="taskId">Request id</label>
+        <input type="text" class="form-control" id="taskId" name="taskId" placeholder="Request id">
+    </div>
+    <button type="submit" class="btn btn-default">Add to queue</button>
+</form>
+</#if>
 <#include "components/footer.ftl">
