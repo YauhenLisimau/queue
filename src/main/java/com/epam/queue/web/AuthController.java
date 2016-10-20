@@ -1,7 +1,6 @@
 package com.epam.queue.web;
 
 import com.epam.queue.domain.Role;
-import com.epam.queue.domain.User;
 import com.epam.queue.service.UserService;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
