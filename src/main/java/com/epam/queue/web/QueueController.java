@@ -1,6 +1,5 @@
 package com.epam.queue.web;
 
-import com.epam.queue.domain.User;
 import com.epam.queue.service.TaskService;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -12,9 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
-import java.sql.Date;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -44,10 +40,12 @@ public class QueueController {
 
     @RequestMapping(value = "/task", method = POST)
     public String addTask(Principal user, @RequestParam String taskId) {
-        Document task = new Document();
-        taskService.setId(task, taskId);
-        taskService.setUsername(task, user.getName());
-        taskService.insertOne(task);
+        if (user != null) {
+            Document task = new Document();
+            taskService.setId(task, taskId);
+            taskService.setUsername(task, user.getName());
+            taskService.insertOne(task);
+        }
         return "redirect:/";
     }
 

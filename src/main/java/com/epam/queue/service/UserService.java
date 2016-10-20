@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 import static com.mongodb.client.model.Filters.eq;
 
 @Service
@@ -43,5 +45,9 @@ public class UserService extends BaseMongoService {
 
     public void setPassword(Document user, String password) {
         user.put("passwordHash", passwordEncoder.encode(password));
+    }
+
+    public void setAuthorities(Document user, List<String> authorities) {
+        user.put("authorities", authorities);
     }
 }

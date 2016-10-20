@@ -3,4 +3,4 @@ spring:
     mongodb:
       database: local
 
-requestUrl: http://github.com/
+requestUrl: https://github.com/AmwayEIA/lynx/pull/

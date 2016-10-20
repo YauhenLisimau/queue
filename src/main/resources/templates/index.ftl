@@ -1,4 +1,5 @@
 <#include "components/header.ftl">
+<#if user??>
 <form class="form-inline" action="/task" method="post">
     <div class="form-group">
         <label for="taskId">Request id</label>
@@ -6,6 +7,7 @@
     </div>
     <button type="submit" class="btn btn-default">Add to queue</button>
 </form>
+</#if>
 <table class="table">
     <thead>
     <tr>
