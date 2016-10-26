@@ -27,6 +27,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .antMatchers("/register", "/").permitAll()
                 .and().formLogin().loginPage("/login").defaultSuccessUrl("/").permitAll()
                 .and().logout().permitAll()
+                .and().sessionManagement().maximumSessions(1).expiredUrl("/").and()
                 .and().csrf().disable();
     }
 
