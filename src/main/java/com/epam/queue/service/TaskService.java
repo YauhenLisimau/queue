@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.mongodb.client.model.Filters.exists;
 import static com.mongodb.client.model.Filters.gt;
-import static com.mongodb.client.model.Filters.ne;
 
 @Service
 public class TaskService extends BaseMongoService {
@@ -25,11 +25,11 @@ public class TaskService extends BaseMongoService {
     }
 
     public List<Document> getActiveQueue() {
-        return consumeToList(mongoCollection.find(ne("numberInQueue", null)).sort(Sorts.ascending("numberInQueue")));
+        return consumeToList(mongoCollection.find(exists("numberInQueue")).sort(Sorts.ascending("numberInQueue")));
     }
 
     public Integer getActiveQueueCount() {
-        return Long.valueOf(mongoCollection.count(ne("numberInQueue", null))).intValue();
+        return Long.valueOf(mongoCollection.count(exists("numberInQueue"))).intValue();
     }
 
     public void addToQueue(Document task) {
