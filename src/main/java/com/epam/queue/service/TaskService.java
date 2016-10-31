@@ -40,7 +40,8 @@ public class TaskService extends BaseMongoService {
     public void removeFromQueue(Document task) {
         consumeToList(mongoCollection.find(gt("numberInQueue", getNumberInQueue(task))))
                 .forEach(it -> updateOneFieldById(getObjectId(it), "numberInQueue", getNumberInQueue(it) - 1));
-        deleteOne(task);
+        task.remove("numberInQueue");
+        replaceOne(task);
     }
 
     public void moveUp(Document task) {
