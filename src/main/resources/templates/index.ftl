@@ -13,7 +13,6 @@
     <#list tasks as task>
     <tr>
         <td>${task.username}</td>
-        <td><a href="${task.url}">${task.name}</a></td>
         <td>
             <#if user?? && user == task.username>
             <div class="dropdown">
