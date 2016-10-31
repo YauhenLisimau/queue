@@ -6,6 +6,7 @@ import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.mongodb.client.model.Filters.exists;
@@ -15,7 +16,8 @@ import static com.mongodb.client.model.Filters.gt;
 public class TaskService extends BaseMongoService {
 
     private static final String collectionName = "task";
-    private enum JobStatus {
+    public enum JobStatus {
+        notMerged,
         merged
     }
 
@@ -58,8 +60,12 @@ public class TaskService extends BaseMongoService {
         updateOneFieldById(getObjectId(task), "numberInQueue", numberInQueue + 1);
     }
 
+    public Document findByName(String jobName) {
+        return findFirstByProperty("jobs.name", jobName);
+    }
+
     public void updateStatus(String jobName, String status) {
-        Document task = findFirstByProperty("jobs.name", jobName);
+        Document task = findByName(jobName);
         if (task != null) {
             for (Document job : getJobs(task)) {
                 if (jobName.equals(getName(job))) {
@@ -71,6 +77,12 @@ public class TaskService extends BaseMongoService {
                 removeFromQueue(task);
             }
         }
+    }
+
+    public void addJob(Document task, Document job) {
+        List<Document> jobs = getJobs(task);
+        jobs.add(job);
+        setJobs(task, jobs);
     }
 
     //------------------------- Fields -------------------------------------------//
@@ -93,7 +105,11 @@ public class TaskService extends BaseMongoService {
 
     @SuppressWarnings("unchecked")
     public List<Document> getJobs(Document task) {
-        return task.get("jobs", List.class);
+        List<Document> result = task.get("jobs", List.class);
+        if (result == null) {
+            result = new ArrayList<>();
+        }
+        return result;
     }
 
     public void setJobs(Document task, List<Document> jobs) {
@@ -106,6 +122,14 @@ public class TaskService extends BaseMongoService {
 
     public void setName(Document job, String name) {
         job.put("name", name);
+    }
+
+    public String getUrl(Document job) {
+        return job.getString("url");
+    }
+
+    public void setUrl(Document job, String url) {
+        job.put("url", url);
     }
 
     public String getStatus(Document job) {

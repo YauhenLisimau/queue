@@ -2,7 +2,6 @@
 <table class="table">
     <thead>
     <tr>
-        <th>created</th>
         <th>username</th>
         <th>link</th>
         <#if user??>
@@ -13,7 +12,6 @@
     <tbody>
     <#list tasks as task>
     <tr>
-        <td>${task.creationDate?datetime}</td>
         <td>${task.username}</td>
         <td><a href="${task.url}">${task.name}</a></td>
         <td>
@@ -38,10 +36,6 @@
     <div class="form-group">
         <label for="url">Url</label>
         <input type="text" class="form-control" id="url" name="url" placeholder="Url">
-    </div>
-    <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" class="form-control" id="name" name="name" placeholder="Name">
     </div>
     <button type="submit" class="btn btn-default">Add</button>
 </form>
