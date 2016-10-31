@@ -35,8 +35,6 @@ public class QueueController {
     public String addTask(Principal user, @RequestParam String url, @RequestParam String name) {
         if (user != null) {
             Document task = new Document();
-            taskService.setUrl(task, url);
-            taskService.setName(task, name);
             taskService.setUsername(task, user.getName());
             taskService.insertOne(task);
         }

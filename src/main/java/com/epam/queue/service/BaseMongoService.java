@@ -43,10 +43,6 @@ public abstract class BaseMongoService {
     public void initCollection() {
     }
 
-    public MongoCollection<Document> getCollection() {
-        return mongoCollection;
-    }
-
     public void drop() {
         logger.info("mass change collection {} drop (BaseMongoService.drop)", mongoCollection.getNamespace().getCollectionName());
         mongoCollection.drop();
@@ -133,9 +129,7 @@ public abstract class BaseMongoService {
     }
 
     public List<Document> find() {
-        List<Document> docs = new ArrayList<>();
-        mongoCollection.find().forEach((Consumer<Document>) docs::add);
-        return docs;
+        return consumeToList(mongoCollection.find());
     }
 
     public long count() {
@@ -154,12 +148,20 @@ public abstract class BaseMongoService {
         return messageSource.getMessage(code, args, LocaleContextHolder.getLocale());
     }
 
-    public void updateOneFieldById(String id, String fieldName, Object value) {
+    public void updateOneFieldById(ObjectId id, String fieldName, Object value) {
         logger.info("change collection {} updateOne id {} fieldName {} value {} (BaseMongoService.updateOneFieldById)", mongoCollection.getNamespace().getCollectionName(), id, fieldName, value);
-        mongoCollection.updateOne(eq("_id", new ObjectId(id)), new Document("$set", new Document(fieldName, value)));
+        mongoCollection.updateOne(eq("_id", id), new Document("$set", new Document(fieldName, value)));
+    }
+
+    public void updateOneFieldById(String id, String fieldName, Object value) {
+        updateOneFieldById(new ObjectId(id), fieldName, value);
     }
 
     public Date getCreationDate(Document document) {
-        return document.getObjectId("_id").getDate();
+        return getObjectId(document).getDate();
+    }
+
+    public ObjectId getObjectId(Document document) {
+        return document.getObjectId("_id");
     }
 }
